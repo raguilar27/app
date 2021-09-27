@@ -1,13 +1,12 @@
-import React from "react";
 import { useState } from "react";
 
 const Counters = () => {
-  const [count, setCount] = useState(0);
+  const [counter, setCounter] = useState(0);
 
   return (
     <div>
-      <h1>{count}</h1>
-      <button class="button1" onClick={() => setCount(count + 1)}>
+      <h1>{counter}</h1>
+      <button className="button1" onClick={() => setCounter(counter + 1)}>
         Increment
       </button>
     </div>
