@@ -1,9 +1,9 @@
 import "./App.css";
-import Counters from "./components/counters.jsx";
+import Counters from "./components/counters";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <Counters />
     </div>
   );
