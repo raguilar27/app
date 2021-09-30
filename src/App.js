@@ -32,11 +32,20 @@ function App() {
   const [bad, setBad] = useState(0);
   const [data, setData] = useState([]);
 
-  const goodClick = () => setGood(good + 1);
-  const neutralClick = () => setNeutral(neutral + 1);
-  const badClick = () => setBad(bad + 1);
-
-  const manipulateData = () => {};
+  const stats = {
+    handleGood: () => {
+      setData(data.concat(1));
+      setGood(good + 1);
+    },
+    handleNeutral: () => {
+      setData(data.concat(0));
+      setNeutral(neutral + 1);
+    },
+    handleBad: () => {
+      setData(data.concat(-1));
+      setBad(bad + 1);
+    },
+  };
 
   return (
     <div className="App">
@@ -47,14 +56,10 @@ function App() {
       <Content course={course} />
       <Total course={course} />*/}
       <h1>give feedback</h1>
-      <Button onClick={goodClick} text="good" />
-      <Button onClick={neutralClick} text="neutral" />
-      <Button onClick={badClick} text="bad" />
-      <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <Statistics data={data} />
+      <Button handleClick={stats.handleGood} text="good" />
+      <Button handleClick={stats.handleNeutral} text="neutral" />
+      <Button handleClick={stats.handleBad} text="bad" />
+      <Statistics data={data} good={good} neutral={neutral} bad={bad} />
     </div>
   );
 }
