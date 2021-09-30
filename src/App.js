@@ -59,7 +59,10 @@ function App() {
       <Button handleClick={stats.handleGood} text="good" />
       <Button handleClick={stats.handleNeutral} text="neutral" />
       <Button handleClick={stats.handleBad} text="bad" />
-      <Statistics data={data} good={good} neutral={neutral} bad={bad} />
+      <h1>statistics</h1>
+      <table>
+        <Statistics data={data} good={good} neutral={neutral} bad={bad} />
+      </table>
     </div>
   );
 }
