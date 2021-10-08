@@ -11,11 +11,35 @@ const Anecdotes = () => {
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients",
   ];
 
+  const votesArr = new Array(anecdotes.length).fill(0);
+
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(votesArr);
+
+  const nextAnecdote = () => {
+    setSelected(Math.floor(Math.random() * anecdotes.length));
+  };
+
+  const increaseVotes = () => {
+    const copy = { ...votes };
+    copy[selected] += 1;
+    setVotes(copy);
+  };
+
+  const max = Object.keys(votes).reduce((a, b) =>
+    votes[a] > votes[b] ? a : b
+  );
 
   return (
     <div>
-      <h1>{anecdotes[selected]}</h1>
+      <h3>Anecdote of the day</h3>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={increaseVotes}>vote</button>
+      <button onClick={nextAnecdote}>next ancedote</button>
+      <h3>Anecdote with most votes</h3>
+      <p>{anecdotes[max]}</p>
+      <p>has {votes[max]} votes</p>
     </div>
   );
 };
