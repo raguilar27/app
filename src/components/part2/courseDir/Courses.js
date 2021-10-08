@@ -50,7 +50,7 @@ const Courses = () => {
     <div>
       <h2>Web development curriculum </h2>
       {courses.map((course) => (
-        <Course key={courses.id} course={course} />
+        <Course key={course} course={course} />
       ))}
     </div>
   );
