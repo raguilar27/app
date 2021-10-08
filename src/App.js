@@ -1,9 +1,9 @@
 import "./App.css";
-import Api from "./components/api";
-import Counters from "./components/counters";
-import Course from "./components/courseDir/course";
-import Unicafe from "./components/unicafeDir/unicafe";
-import Anecdotes from "./components/anecdotesDir/anecdotes";
+import Api from "./components/other/api";
+import Counters from "./components/other/counters";
+import Course from "./components/part1/courseDir/course";
+import Unicafe from "./components/part1/unicafeDir/unicafe";
+import Anecdotes from "./components/part1/anecdotesDir/anecdotes";
 
 function App() {
   return (
