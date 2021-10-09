@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Filter from "./filter";
 import PersonForm from "./personForm";
+import Persons from "./persons";
 
 const Phonebook = () => {
   const [persons, setPersons] = useState([
@@ -49,7 +50,7 @@ const Phonebook = () => {
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleFilterName={handleFilterName} />
       <br />
-      <h2>Add a new</h2>
+      <h2>Add a new person</h2>
       <PersonForm
         addPerson={addPerson}
         newName={newName}
@@ -59,20 +60,7 @@ const Phonebook = () => {
       />
       <br />
       <h2>Numbers</h2>
-      {persons
-        .filter((person) => {
-          if (!newFilter) return true;
-          if (
-            person.name.includes(newFilter) ||
-            person.number.includes(newFilter)
-          )
-            return true;
-        })
-        .map((person) => (
-          <p key={person.id}>
-            {person.name} {person.number}
-          </p>
-        ))}
+      <Persons persons={persons} newFilter={newFilter} />
     </div>
   );
 };
