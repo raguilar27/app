@@ -2,12 +2,12 @@ import Header from "./header";
 import Content from "./content";
 import Total from "./total";
 
-const Course = ({ course }) => {
+const Course = ({ header, parts }) => {
   return (
     <div>
-      <Header header={course.name} />
-      <Content content={course.parts} />
-      <Total total={course.parts} />
+      <Header header={header} />
+      <Content content={parts} />
+      <Total total={parts} />
     </div>
   );
 };

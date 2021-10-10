@@ -16,7 +16,7 @@ function App() {
       <Unicafe />
       <Courses />
       <Phonebook />*/}
-      <Courses />
+      <Countries />
     </div>
   );
 }
