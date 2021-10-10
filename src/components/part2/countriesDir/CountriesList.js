@@ -1,6 +1,6 @@
 import Country from "./country";
 
-const CountriesList = ({ filter, countries, handleCountry, showCountry }) => {
+const CountriesList = ({ filter, countries, showCountry }) => {
   const countriesList = countries.filter(
     (country) =>
       country.name.common.toLowerCase().includes(filter.toLowerCase()) ||
@@ -16,16 +16,14 @@ const CountriesList = ({ filter, countries, handleCountry, showCountry }) => {
       </div>
     );
   } else if (listLength <= 10 && listLength >= 2) {
-    return (
-      <div>
-        {countriesList.map((country) => (
-          <div>
-            <p key={country.capital}>{country.name.common}</p>
-            <button>show</button>
-          </div>
-        ))}
+    return countriesList.map((country) => (
+      <div key={country.name.common}>
+        <p>{country.name.common}</p>
+        <button type="button" value={country.name.common} onClick={showCountry}>
+          show
+        </button>
       </div>
-    );
+    ));
   } else if (listLength > 10 && listLength !== 0) {
     return (
       <div>

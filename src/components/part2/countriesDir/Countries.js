@@ -6,7 +6,6 @@ import CountriesList from "./CountriesList";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState("");
-  const [showCountry, setShowCountry] = useState("");
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((res) => {
@@ -18,9 +17,9 @@ const Countries = () => {
     setFilter(e.target.value);
   };
 
-  const handleCountry = (event) => {
+  const showCountry = (event) => {
     event.preventDefault();
-    setShowCountry(event);
+    setFilter(event.target.value);
   };
 
   return (
@@ -29,7 +28,6 @@ const Countries = () => {
       <CountriesList
         filter={filter}
         countries={countries}
-        handleCountry={handleCountry}
         showCountry={showCountry}
       />
     </div>
