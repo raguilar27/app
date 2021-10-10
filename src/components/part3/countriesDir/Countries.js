@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [query, setQuery] = useState("");
+  const [showCountry, setShowCountry] = useState("");
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((res) => {
@@ -15,6 +16,11 @@ const Countries = () => {
     setQuery(e.target.value);
   };
 
+  const handleCountry = (event) => {
+    event.preventDefault();
+    setShowCountry(event);
+  };
+
   return (
     <div>
       <div>
@@ -23,14 +29,17 @@ const Countries = () => {
       </div>
       <div>
         {countries
-          .filter((country) => {
-            if (!query) return true;
-            if (country.name.official.includes(query)) return true;
-          })
+          .filter((country) =>
+            country.name.common.toLowerCase().includes(query.toLowerCase())
+          )
           .map((country) => (
-            <pre key={country.name.official}>
-              {JSON.stringify(country, 2, null)}
-            </pre>
+            <div key={country.name.common}>
+              <h4>{country.name.common}</h4>
+              <p>{country.capital}</p>
+              <p>{country.population}</p>
+              <h6>Languages</h6>
+              <pre>{JSON.stringify(country, null, 2)}</pre>
+            </div>
           ))}
       </div>
     </div>
