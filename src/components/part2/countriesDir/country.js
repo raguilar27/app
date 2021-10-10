@@ -1,8 +1,21 @@
-const Country = (props) => {
+const Country = ({ country }) => {
   return (
     <div>
-      <p>Country</p>
-      {/*<pre>{JSON.stringify(country, null, 2)}</pre>*/}
+      <h4>{country.name.common}</h4>
+      <p>Capital: {country.capital}</p>
+      <p>Population: {country.population}</p>
+      <h6>Languages</h6>
+      <ul>
+        {Object.keys(country.languages).map((key) => (
+          <li key={key}>{country.languages[key]}</li>
+        ))}
+      </ul>
+      <img
+        src={country.flags.png}
+        alt={`${country.name.common}\s flag`}
+        style={{ width: "100px" }}
+      />
+      {<pre>{JSON.stringify(country, null, 2)}</pre>}
     </div>
   );
 };

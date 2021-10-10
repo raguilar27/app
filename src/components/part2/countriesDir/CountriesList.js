@@ -1,8 +1,10 @@
 import Country from "./country";
 
 const CountriesList = ({ filter, countries, handleCountry, showCountry }) => {
-  const countriesList = countries.filter((country) =>
-    country.name.common.toLowerCase().includes(filter.toLowerCase())
+  const countriesList = countries.filter(
+    (country) =>
+      country.name.common.toLowerCase().includes(filter.toLowerCase()) ||
+      country.name.official.toLowerCase().includes(filter.toLowerCase())
   );
 
   let listLength = countriesList.length;
@@ -10,16 +12,21 @@ const CountriesList = ({ filter, countries, handleCountry, showCountry }) => {
   if (listLength === 1) {
     return (
       <div>
-        <Country />
+        <Country country={countriesList[0]} />
       </div>
     );
   } else if (listLength <= 10 && listLength >= 2) {
     return (
       <div>
-        <p>map the counrties and create show button</p>
+        {countriesList.map((country) => (
+          <div>
+            <p key={country.capital}>{country.name.common}</p>
+            <button>show</button>
+          </div>
+        ))}
       </div>
     );
-  } else if (listLength > 10) {
+  } else if (listLength > 10 && listLength !== 0) {
     return (
       <div>
         <p>Too many matches, specify another filter</p>
