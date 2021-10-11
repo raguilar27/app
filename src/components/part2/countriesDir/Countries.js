@@ -6,12 +6,24 @@ import CountriesList from "./CountriesList";
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState("");
-
+  const [weather, setWeather] = useState([]);
+  const [capital, setCapital] = useState("Helsinki");
+  const newAccessKey = process.env.REACT_APP_API_KEY;
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((res) => {
       setCountries(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://api.weatherstack.com/current?access_key=${newAccessKey}&query=${capital}`
+      )
+      .then((res) => {
+        setWeather(res.data);
+      });
+  }, [newAccessKey, capital]);
 
   const handleFilter = (e) => {
     setFilter(e.target.value);
@@ -22,6 +34,10 @@ const Countries = () => {
     setFilter(event.target.value);
   };
 
+  const handleCountryChange = (capital) => {
+    setCapital(capital);
+  };
+
   return (
     <div>
       <Filter filter={filter} handleFilter={handleFilter} />
@@ -29,6 +45,8 @@ const Countries = () => {
         filter={filter}
         countries={countries}
         showCountry={showCountry}
+        weather={weather}
+        handleCountry={handleCountryChange}
       />
     </div>
   );

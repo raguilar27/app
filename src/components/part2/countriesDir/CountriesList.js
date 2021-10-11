@@ -1,6 +1,12 @@
 import Country from "./country";
 
-const CountriesList = ({ filter, countries, showCountry }) => {
+const CountriesList = ({
+  filter,
+  countries,
+  showCountry,
+  weather,
+  handleCountry,
+}) => {
   const countriesList = countries.filter((country) =>
     country.name.official.toLowerCase().includes(filter.toLowerCase())
   );
@@ -8,9 +14,11 @@ const CountriesList = ({ filter, countries, showCountry }) => {
   let listLength = countriesList.length;
 
   if (listLength === 1) {
+    handleCountry(countriesList[0].capital);
+
     return (
       <div>
-        <Country country={countriesList[0]} />
+        <Country country={countriesList[0]} weather={weather} />
       </div>
     );
   } else if (listLength <= 10 && listLength >= 2) {
