@@ -12,7 +12,7 @@ const Country = ({ country }) => {
       </ul>
       <img
         src={country.flags.png}
-        alt={`${country.name.common}\s flag`}
+        alt={`The flag of ${country.name.common}`}
         style={{ width: "100px" }}
       />
       {<pre>{JSON.stringify(country, null, 2)}</pre>}
