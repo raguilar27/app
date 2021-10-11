@@ -23,12 +23,16 @@ const Phonebook = () => {
       number: newNumber,
       id: persons.length + 1,
     };
-    // names to
     found
       ? alert(`${newName} is already added to phonebook`)
-      : setPersons(persons.concat(personObject));
-    setNewName("");
-    setNewNumber("");
+      : axios
+          .post("http://localhost:3001/persons", personObject)
+          .then((res) => {
+            console.log(res);
+            setPersons(persons.concat(personObject));
+            setNewName("");
+            setNewNumber("");
+          });
   };
 
   const handleNameChange = (event) => {

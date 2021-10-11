@@ -17,7 +17,7 @@ function App() {
       <Courses />
       <Phonebook />
       <Countries />*/}
-      <Countries />
+      <Phonebook />
     </div>
   );
 }

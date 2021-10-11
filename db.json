@@ -19,6 +19,16 @@
       "name": "Mary Poppendieck",
       "number": "39-23-6423122",
       "id": 4
+    },
+    {
+      "name": "Rogelio Aguilar",
+      "number": "22-3322",
+      "id": 5
+    },
+    {
+      "name": "Bob Ross",
+      "number": "34-1121-14",
+      "id": 6
     }
   ]
 }
