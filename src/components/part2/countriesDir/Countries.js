@@ -27,15 +27,12 @@ const Countries = () => {
 
   const handleFilter = (e) => {
     setFilter(e.target.value);
+    setCapital(capital);
   };
 
   const showCountry = (event) => {
     event.preventDefault();
     setFilter(event.target.value);
-  };
-
-  const handleCountryChange = (capital) => {
-    setCapital(capital);
   };
 
   return (
@@ -46,7 +43,6 @@ const Countries = () => {
         countries={countries}
         showCountry={showCountry}
         weather={weather}
-        handleCountry={handleCountryChange}
       />
     </div>
   );

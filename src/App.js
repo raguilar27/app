@@ -15,7 +15,8 @@ function App() {
       <Anecdotes />
       <Unicafe />
       <Courses />
-      <Phonebook />*/}
+      <Phonebook />
+      <Countries />*/}
       <Countries />
     </div>
   );
