@@ -12,25 +12,81 @@ const Phonebook = () => {
   const [newFilter, setNewFilter] = useState("");
 
   useEffect(() => {
-    modules.getAll().then((numbers) => {
-      setPersons(numbers);
+    modules.getAll().then((persons) => {
+      setPersons(persons);
     });
   }, []);
 
-  const addPerson = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const personObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1,
-    };
-    found
-      ? alert(`${newName} is already added to phonebook`)
-      : modules.create(personObject).then((returnedPerson) => {
-          setPersons(persons.concat(returnedPerson));
-          setNewName("");
-          setNewNumber("");
-        });
+
+    if (!newName || !newNumber) {
+      alert("Please enter required fields");
+      return;
+    }
+
+    // Person exists
+    const foundPerson = persons.find((person) => person.name === newName);
+
+    // Persons name and number already in phonebook
+    if (foundPerson && foundPerson.number == newNumber) {
+      alert(`${newName} is already addedd to phonebook`);
+      setNewName("");
+      setNewNumber("");
+      return;
+    } else if (foundPerson && foundPerson.number !== newNumber) {
+      if (
+        window.confirm(
+          `${foundPerson.name} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        // Changes persons number
+        const changedPerson = { ...foundPerson, number: newNumber };
+        const id = foundPerson.id;
+        modules
+          .update(id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== id ? person : returnedPerson
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      } else {
+        return;
+      }
+    } else {
+      // Adds new person to phonebook
+      const personObject = {
+        name: newName,
+        number: newNumber,
+      };
+
+      modules.create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      });
+    }
+  };
+
+  const removePerson = (id) => {
+    if (window.confirm("Do you really want to delete this person")) {
+      modules
+        .remove(id)
+        .then(() => {
+          const del = persons.filter((person) => person.id !== id);
+          setPersons(del);
+        })
+        .catch((err) => alert(err));
+    } else {
+      return;
+    }
   };
 
   const handleNameChange = (event) => {
@@ -45,10 +101,6 @@ const Phonebook = () => {
     setNewFilter(event.target.value);
   };
 
-  const found = persons.find(
-    (person) => person.name === newName || person.number == newNumber
-  );
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -56,7 +108,7 @@ const Phonebook = () => {
       <br />
       <h2>Add a new person</h2>
       <PersonForm
-        addPerson={addPerson}
+        handleSubmit={handleSubmit}
         newName={newName}
         newNumber={newNumber}
         handleNameChange={handleNameChange}
@@ -64,7 +116,11 @@ const Phonebook = () => {
       />
       <br />
       <h2>Numbers</h2>
-      <Persons persons={persons} newFilter={newFilter} />
+      <Persons
+        persons={persons}
+        newFilter={newFilter}
+        removePerson={removePerson}
+      />
     </div>
   );
 };

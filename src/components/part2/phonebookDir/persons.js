@@ -1,4 +1,4 @@
-const Persons = ({ persons, newFilter }) => {
+const Persons = ({ persons, newFilter, removePerson }) => {
   return (
     <div>
       {persons
@@ -11,9 +11,14 @@ const Persons = ({ persons, newFilter }) => {
             return true;
         })
         .map((person) => (
-          <p key={person.id}>
-            {person.name} {person.number}
-          </p>
+          <div key={person.id}>
+            <p>
+              {person.name} {person.number}
+            </p>
+            <button type="submit" onClick={() => removePerson(person.id)}>
+              delete
+            </button>
+          </div>
         ))}
     </div>
   );
