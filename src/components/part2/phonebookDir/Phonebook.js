@@ -30,7 +30,7 @@ const Phonebook = () => {
 
     // Persons name and number already in phonebook
     if (foundPerson && foundPerson.number == newNumber) {
-      alert(`${newName} is already addedd to phonebook`);
+      alert(`${newName} is already added to phonebook`);
       setNewName("");
       setNewNumber("");
       return;
@@ -76,7 +76,7 @@ const Phonebook = () => {
   };
 
   const removePerson = (id) => {
-    if (window.confirm("Do you really want to delete this person")) {
+    if (window.confirm("Do you really want to delete this person?")) {
       modules
         .remove(id)
         .then(() => {
