@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import Filter from "./filter";
 import PersonForm from "./personForm";
 import Persons from "./persons";
-import axios from "axios";
 import modules from "./modules";
+import Notification from "./notification";
 
 const Phonebook = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newFilter, setNewFilter] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     modules.getAll().then((persons) => {
@@ -21,7 +23,7 @@ const Phonebook = () => {
     event.preventDefault();
 
     if (!newName || !newNumber) {
-      alert("Please enter required fields");
+      alert("Please enter all fields!");
       return;
     }
 
@@ -53,9 +55,19 @@ const Phonebook = () => {
             );
             setNewName("");
             setNewNumber("");
+            setSuccessMessage(`${foundPerson.name}'s number was updated!'`);
+            setTimeout(() => {
+              setSuccessMessage(null);
+            }, 5000);
           })
           .catch((err) => {
-            alert(err);
+            setErrorMessage(
+              `${foundPerson.name} was already removed from the server`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
+            setPersons(persons.filter((person) => person.id !== id));
           });
       } else {
         return;
@@ -67,11 +79,23 @@ const Phonebook = () => {
         number: newNumber,
       };
 
-      modules.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setNewName("");
-        setNewNumber("");
-      });
+      modules
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setNewName("");
+          setNewNumber("");
+          setSuccessMessage(`${returnedPerson.name} was added!'`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+        })
+        .catch((err) => {
+          setErrorMessage(`${personObject.name} could not be added.'`);
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
+        });
     }
   };
 
@@ -82,6 +106,12 @@ const Phonebook = () => {
         .then(() => {
           const del = persons.filter((person) => person.id !== id);
           setPersons(del);
+          setSuccessMessage(
+            `Deleted ${persons.find((person) => person.id === id).name}`
+          );
+          setTimeout(() => {
+            setSuccessMessage(null);
+          }, 5000);
         })
         .catch((err) => alert(err));
     } else {
@@ -104,6 +134,10 @@ const Phonebook = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification
+        successMessage={successMessage}
+        errorMessage={errorMessage}
+      />
       <Filter newFilter={newFilter} handleFilterName={handleFilterName} />
       <br />
       <h2>Add a new person</h2>
